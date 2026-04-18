@@ -32,10 +32,7 @@ import static meteordevelopment.meteorclient.utils.Utils.getWindowHeight;
 import static meteordevelopment.meteorclient.utils.Utils.getWindowWidth;
 import static org.lwjgl.glfw.GLFW.*;
 import static org.lwjgl.glfw.GLFW.GLFW_MOD_CONTROL;
-import net.minecraft.client.util.MacWindowUtil;
-
-//? if >=1.21.5
-import net.minecraft.client.input.KeyInput;
+import static net.minecraft.client.MinecraftClient.IS_SYSTEM_MAC;
 
 public class CatppuccinModulesScreen extends TabScreen {
     private final CatppuccinGuiTheme theme;
@@ -97,17 +94,12 @@ public class CatppuccinModulesScreen extends TabScreen {
     }
 
     @Override
-    public boolean keyPressed(KeyInput input) {
-        super.keyPressed(input);
+    public boolean keyPressed(int keyCode, int scanCode, int modifiers) {
+        super.keyPressed(keyCode, scanCode, modifiers);
 
         if (!theme.catppuccinSearchScreen.get()) return false;
 
-        //? if >=1.21.5 {
-        int keyCode = input.key();
-        int modifiers = input.modifiers();
-        //? }
-
-        boolean control = MacWindowUtil.IS_MAC ? modifiers == GLFW_MOD_SUPER : modifiers == GLFW_MOD_CONTROL;
+        boolean control = IS_SYSTEM_MAC ? modifiers == GLFW_MOD_SUPER : modifiers == GLFW_MOD_CONTROL;
 
         if (control && keyCode == GLFW_KEY_F) {
             mc.setScreen(new CatppuccinSearchScreen(theme));

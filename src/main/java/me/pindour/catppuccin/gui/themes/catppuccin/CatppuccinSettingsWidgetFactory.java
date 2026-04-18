@@ -35,7 +35,7 @@ import meteordevelopment.meteorclient.settings.*;
 import meteordevelopment.meteorclient.utils.Utils;
 import meteordevelopment.meteorclient.utils.render.color.SettingColor;
 import net.minecraft.client.resource.language.I18n;
-import org.apache.commons.lang3.Strings;
+import org.apache.commons.lang3.StringUtils;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -128,7 +128,7 @@ public class CatppuccinSettingsWidgetFactory extends SettingsWidgetFactory {
         RemoveInfo removeInfo = null;
 
         for (Setting<?> setting : group) {
-            if (!Strings.CI.contains(setting.title, filter)) continue;
+            if (!StringUtils.containsIgnoreCase(setting.title, filter)) continue;
 
             boolean visible = setting.isVisible();
             setting.lastWasVisible = visible;
@@ -252,9 +252,7 @@ public class CatppuccinSettingsWidgetFactory extends SettingsWidgetFactory {
         WHorizontalList list = table.add(theme.horizontalList()).expandX().widget();
 
         WButton edit = list.add(theme.button(CatppuccinBuiltinIcons.EDIT.texture())).widget();
-        edit.action = () -> mc.setScreen(
-                setting/*? if <=1.21.4 >>+ '()' *//*.get()*/.createScreen(theme)
-        );
+        edit.action = () -> mc.setScreen(setting.get().createScreen(theme));
 
         title(list, setting).padLeft(theme.pad()).expandCellX();
         reset(list, setting, null, () -> list.mouseOver);

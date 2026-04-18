@@ -418,7 +418,6 @@ public class CatppuccinGuiTheme extends GuiTheme {
     }
 
     //? if >=1.21.11
-    @Override
     public WWidget module(Module module, String title) {
         return w(new WCatppuccinModule(module, title));
     }

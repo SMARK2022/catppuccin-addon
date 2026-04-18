@@ -22,10 +22,7 @@ public class WCatppuccinView extends WView implements CatppuccinWidget {
                          .size(handleWidth(), handleHeight())
                          .radius(smallRadius())
                          .color(theme().scrollbarColor.get(
-                                 //? if >=1.21.11 {
-                                 focused,
-                                 //? } else
-                                 //((IWidgetBackport)this).catppuccin$isSelfFocused(),
+                             mouseOver,
                                  handleMouseOver
                          ))
                          .render();

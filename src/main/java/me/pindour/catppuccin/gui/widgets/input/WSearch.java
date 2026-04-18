@@ -18,9 +18,6 @@ import static meteordevelopment.meteorclient.MeteorClient.mc;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_RIGHT;
 
-//? >=1.21.5
-import net.minecraft.client.gui.Click;
-
 public abstract class WSearch extends WVerticalList {
     protected WSearchHeader header;
     protected WResultsContainer searchResults;
@@ -111,10 +108,7 @@ public abstract class WSearch extends WVerticalList {
         }
 
         @Override
-        public boolean onMouseClicked(Click click, boolean doubled) {
-            //? >=1.21.5
-            int button = click.button();
-
+        public boolean onMouseClicked(double mouseX, double mouseY, int button, boolean doubled) {
             if (mouseOver && (button == GLFW_MOUSE_BUTTON_LEFT || button == GLFW_MOUSE_BUTTON_RIGHT))
                 pressed = true;
 
@@ -122,11 +116,8 @@ public abstract class WSearch extends WVerticalList {
         }
 
         @Override
-        public boolean onMouseReleased(Click click) {
+        public boolean onMouseReleased(double mouseX, double mouseY, int button) {
             if (pressed) {
-                //? >=1.21.5
-                int button = click.button();
-
                 if (button == GLFW_MOUSE_BUTTON_LEFT) {
                     if (result instanceof ModuleSearchResult r) {
                         r.module().toggle();

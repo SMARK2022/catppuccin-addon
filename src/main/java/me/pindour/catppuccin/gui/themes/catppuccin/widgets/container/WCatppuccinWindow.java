@@ -16,8 +16,6 @@ import meteordevelopment.meteorclient.gui.widgets.containers.WContainer;
 import meteordevelopment.meteorclient.gui.widgets.containers.WHorizontalList;
 import meteordevelopment.meteorclient.gui.widgets.containers.WWindow;
 import meteordevelopment.meteorclient.utils.render.color.Color;
-//? if >=1.21.9
-import net.minecraft.client.gui.Click;
 
 public class WCatppuccinWindow extends WWindow implements CatppuccinWidget {
     private static final int SHADOW_OFFSET = 2;
@@ -257,37 +255,21 @@ public class WCatppuccinWindow extends WWindow implements CatppuccinWidget {
         }
 
         @Override
-        public boolean onMouseClicked(Click click, boolean used) {
-            boolean clicked = super.onMouseClicked(
-                    //? if >=1.21.9
-                    click,
-                    //? if <=1.21.8
-                    //mouseX, mouseY, button,
-                    used
-            );
+        public boolean onMouseClicked(double mouseX, double mouseY, int button, boolean doubled) {
+            boolean clicked = super.onMouseClicked(mouseX, mouseY, button, doubled);
 
             if (clicked && shouldSnap) {
-                //? if >=1.21.9 {
-                mouseOffsetX = click.x() - x;
-                mouseOffsetY = click.y() - y;
-                //?} else {
-                /*mouseOffsetX = mouseX - x;
+                mouseOffsetX = mouseX - x;
                 mouseOffsetY = mouseY - y;
-                *///?}
             }
 
             return clicked;
         }
 
         @Override
-        public boolean mouseReleased(Click click) {
+        public boolean onMouseReleased(double mouseX, double mouseY, int button) {
             if (shouldSnap) modulesScreen.showGrid(false);
-            return super.mouseReleased(
-                    //? if >=1.21.9
-                    click
-                    //? if <=1.21.8
-                    //mouseX, mouseY, button
-            );
+            return super.onMouseReleased(mouseX, mouseY, button);
         }
 
         @Override

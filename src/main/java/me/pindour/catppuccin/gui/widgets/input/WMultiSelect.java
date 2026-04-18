@@ -20,9 +20,6 @@ import java.util.function.Predicate;
 
 import static org.lwjgl.glfw.GLFW.GLFW_MOUSE_BUTTON_LEFT;
 
-//? if >=1.21.9
-import net.minecraft.client.gui.Click;
-
 public abstract class WMultiSelect<T> extends WVerticalList {
     protected final String title;
     protected boolean expanded;
@@ -265,13 +262,10 @@ public abstract class WMultiSelect<T> extends WVerticalList {
         }
 
         @Override
-        public boolean onMouseClicked(Click click, boolean used) {
+        public boolean onMouseClicked(double mouseX, double mouseY, int button, boolean doubled) {
             if (mouseOver
-                //? if >=1.21.9
-                && click.button() == GLFW_MOUSE_BUTTON_LEFT
-                //? if <1.21.9
-                //&& button == GLFW_MOUSE_BUTTON_LEFT
-                && !used
+                && button == GLFW_MOUSE_BUTTON_LEFT
+                && !doubled
             ) {
                 onClick();
                 return true;
@@ -314,13 +308,10 @@ public abstract class WMultiSelect<T> extends WVerticalList {
         }
 
         @Override
-        public boolean onMouseClicked(Click click, boolean used) {
+        public boolean onMouseClicked(double mouseX, double mouseY, int button, boolean doubled) {
             if (mouseOver
-                //? if >=1.21.9
-                && click.button() == GLFW_MOUSE_BUTTON_LEFT
-                //? if <=1.21.8
-                //&& button == GLFW_MOUSE_BUTTON_LEFT
-                && !used
+                && button == GLFW_MOUSE_BUTTON_LEFT
+                && !doubled
                 && !checkbox.mouseOver
             ) {
                 checkbox.setChecked(!checkbox.checked);
@@ -335,7 +326,7 @@ public abstract class WMultiSelect<T> extends WVerticalList {
             boolean selected = checkbox.checked;
 
             selectedCount += selected ? 1 : -1;
-            selectedCount = Math.clamp(selectedCount, 0, items.size());
+            selectedCount = Math.max(0, Math.min(selectedCount, items.size()));
 
             updateSelectAllState();
             updateHeaderLabel();

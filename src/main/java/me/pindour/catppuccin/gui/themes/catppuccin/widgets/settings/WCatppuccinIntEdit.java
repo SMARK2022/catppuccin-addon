@@ -173,11 +173,7 @@ public class WCatppuccinIntEdit extends WVerticalList implements CatppuccinWidge
 
     public boolean showReset() {
         return mouseOver || (slider != null
-                //? if >=1.21.11 {
-                && slider.focused
-                //? } else {
-                /*&& ((WSliderAccessor) slider).catppuccin$isHandleMouseOver()
-                *///? }
+                && slider.mouseOver
         );
     }
 }
