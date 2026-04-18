@@ -18,6 +18,24 @@ base {
 }
 
 repositories {
+    // Prefer locally published Meteor artifacts from this workspace branch.
+    mavenLocal()
+
+    maven {
+        name = "Terraformers"
+        url = uri("https://maven.terraformersmc.com")
+    }
+    maven {
+        name = "MaLiLib Maven"
+        url = uri("https://masa.dy.fi/maven/sakura-ryoko")
+        content { includeGroupAndSubgroups("fi.dy.masa") }
+    }
+    maven {
+        name = "modrinth"
+        url = uri("https://api.modrinth.com/maven")
+    }
+    mavenCentral()
+
     maven {
         name = "meteor-maven"
         url = uri("https://maven.meteordev.org/releases")

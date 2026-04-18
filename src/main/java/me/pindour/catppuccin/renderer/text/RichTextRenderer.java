@@ -5,10 +5,9 @@ import me.pindour.catppuccin.api.text.RichText;
 import me.pindour.catppuccin.api.text.RichTextSegment;
 import meteordevelopment.meteorclient.renderer.*;
 import meteordevelopment.meteorclient.renderer.text.*;
-import meteordevelopment.meteorclient.utils.Utils;
 import meteordevelopment.meteorclient.utils.render.color.Color;
-import org.lwjgl.BufferUtils;
 
+import java.io.IOException;
 import java.nio.ByteBuffer;
 
 //? if <=1.21.4 {
@@ -41,7 +40,7 @@ public class RichTextRenderer implements TextRenderer {
     private double fontScale = 1;
     private double scale = 1;
 
-    public RichTextRenderer(FontFace fontFace)
+    public RichTextRenderer(FontFace fontFace) throws IOException
     {
         this.fontFace = fontFace;
         this.regularFonts = loadFonts(fontFace);
@@ -220,10 +219,10 @@ public class RichTextRenderer implements TextRenderer {
 
     // Helpers
 
-    private Font[] loadFonts(FontFace fontFace)
+    private Font[] loadFonts(FontFace fontFace) throws IOException
     {
-        byte[] bytes = Utils.readBytes(fontFace.toStream());
-        ByteBuffer buffer = BufferUtils.createByteBuffer(bytes.length).put(bytes).flip();
+        // Use the current Meteor FontFace API directly to avoid version-drift.
+        ByteBuffer buffer = fontFace.readToDirectByteBuffer();
 
         Font[] fonts = new Font[5];
 
@@ -233,7 +232,7 @@ public class RichTextRenderer implements TextRenderer {
         return fonts;
     }
 
-    private Font[] resolveVariant(FontFace regularFace, FontInfo.Type type)
+    private Font[] resolveVariant(FontFace regularFace, FontInfo.Type type) throws IOException
     {
         FontFamily family = Fonts.getFamily(regularFace.info.family());
         FontFace fontVariant = family.get(type);
