@@ -21,12 +21,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import java.util.List;
-
-//? if <=1.21.9 {
-/*import java.util.Stack;
-*///?} else {
-import it.unimi.dsi.fastutil.Stack;
-//?}
+import java.util.Stack;
 
 //? if <=1.21.4 {
 /*import meteordevelopment.meteorclient.renderer.GL;
@@ -185,9 +180,6 @@ public abstract class GuiRendererMixin {
 
     @Unique
     private static Scissor peekScissor(Stack<Scissor> stack) {
-        //? if <=1.21.9
-        //return stack.peek();
-        //? if >=1.21.10
-        return stack.top();
+        return stack.peek();
     }
 }
