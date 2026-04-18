@@ -417,10 +417,11 @@ public class CatppuccinGuiTheme extends GuiTheme {
         return w(module(module, module.title));
     }
 
-    //? if >=1.21.11
+    //? if >=1.21.11 {
     public WWidget module(Module module, String title) {
         return w(new WCatppuccinModule(module, title));
     }
+    //?}
 
     @Override
     public WQuad quad(Color color) {
