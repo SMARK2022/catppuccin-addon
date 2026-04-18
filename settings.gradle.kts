@@ -7,6 +7,14 @@ pluginManagement {
     }
 }
 
+// When this addon is used as a submodule inside the Meteor workspace,
+// wire the root project as a composite build so meteordevelopment:meteor-client
+// can be resolved from source without requiring mavenLocal publication first.
+val localMeteorRoot = file("../..")
+if (localMeteorRoot.resolve("build.gradle.kts").exists()) {
+    includeBuild(localMeteorRoot)
+}
+
 plugins {
     id("dev.kikugie.stonecutter") version "0.9"
 }
